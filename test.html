@@ -8,47 +8,47 @@
   <body>
     <h4><i>Review Determination</i></h4>
     <form>
-      <input type="button" onclick="determineReviews(people)" value="Determine Reviews"></input>
+      <label for="names">Enter potential names (seperated by space)</label><br/>
+      <input id="names" type="text"></input><br/>
+      <input type="button" onclick="determineReviews()" value="Determine Reviews"></input>
     </form>
+    <div id="output"></div>
     <script type="text/javascript">
-    var people = ['Dave','Dan','Jason','Richard','Maria'];
-    function shuffleArray ( array )
+
+    function shuffle( array )
     {
-      //https://github.com/coolaj86/knuth-shuffle/blob/master/index.js
-      var currentIndex = array.length, temporaryValue, randomIndex ;
+      var newArray, existingArray;
+      newArray = [];
+      existingArray = array;
 
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-      return array;
-    }
-
-    function shuffle ( array )
-    {
-      var newArray = [];
-      var existingArray = array;Description-Add Metric copy
-      while(existingArray.length > 0)
+      while( existingArray.length > 0 ) {
         newArray.push(existingArray.splice(Math.floor(Math.random()*existingArray.length),1));
+      }
+
       return newArray;
     }
 
-    function determineReviews( people )
+    function determineReviews( )
     { 
-      var shuffledPeople, index;
+      var index, people, shuffledPeople, outputText;
       index = 0;
-      shuffledPeople = shuffleArray(people);
+      people = document.getElementById("names").value.split(" ");
+      outputText = document.getElementById("output");
+      shuffledPeople = [];
 
-      for(index = 0; index < shuffledPeople.length - 1; index++)
-        console.log(shuffledPeople[index] + " reviews " + shuffledPeople[index+1]);
-      console.log(shuffledPeople[index] + " reviews " + shuffledPeople[0] + "\n-------------");
+      if( people.length == 1 ) {
+        outputText.innerHTML = "Enter at least 2 people";
+      }
+      else {
+        console.log("people: " + people)
+        shuffledPeople = shuffle(people);
+        outputText.innerHTML = "";
+
+        for( index = 0; index < shuffledPeople.length - 1; index++ ) {
+          outputText.innerHTML += shuffledPeople[index] + " reviews " + shuffledPeople[index+1] + "<br/>";
+        }
+        outputText.innerHTML += shuffledPeople[index] + " reviews " + shuffledPeople[0];
+      }
     }
 
     </script>
