@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <title>Determine Reviews</title>
+  </head>
+
+  <body>
+    <h4><i>Review Determination</i></h4>
+    <form>
+      <input type="button" onclick="determineReviews(people)" value="Determine Reviews"></input>
+    </form>
+    <script type="text/javascript">
+    var people = ['Dave','Dan','Jason','Richard','Maria'];
+    function shuffleArray ( array )
+    {
+      //https://github.com/coolaj86/knuth-shuffle/blob/master/index.js
+      var currentIndex = array.length, temporaryValue, randomIndex ;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+
+    function shuffle ( array )
+    {
+      var newArray = [];
+      var existingArray = array;Description-Add Metric copy
+      while(existingArray.length > 0)
+        newArray.push(existingArray.splice(Math.floor(Math.random()*existingArray.length),1));
+      return newArray;
+    }
+
+    function determineReviews( people )
+    { 
+      var shuffledPeople, index;
+      index = 0;
+      shuffledPeople = shuffleArray(people);
+
+      for(index = 0; index < shuffledPeople.length - 1; index++)
+        console.log(shuffledPeople[index] + " reviews " + shuffledPeople[index+1]);
+      console.log(shuffledPeople[index] + " reviews " + shuffledPeople[0] + "\n-------------");
+    }
+
+    </script>
+  </body>
+</html>
